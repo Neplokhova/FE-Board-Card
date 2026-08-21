@@ -1,75 +1,116 @@
-# React + TypeScript + Vite
+# Task Board — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive Kanban-style task board application built with React and TypeScript.
 
-Currently, two official plugins are available:
+The application allows users to create and manage boards and cards, organize cards by status, edit and delete items, and move cards between columns using drag and drop.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live Demo
 
-## React Compiler
+- Frontend: https://fe-board-card.vercel.app
+- Backend API: https://task-board-be-llgu.onrender.com
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+### Boards
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Create a board
+- Edit a board
+- Delete a board
+- Open a board using its public ID
 
-```js
-export default defineConfig([
-    globalIgnores(["dist"]),
-    {
-        files: ["**/*.{ts,tsx}"],
-        extends: [
-            // Other configs...
+### Cards
 
-            // Remove tseslint.configs.recommended and replace with this
-            tseslint.configs.recommendedTypeChecked,
-            // Alternatively, use this for stricter rules
-            tseslint.configs.strictTypeChecked,
-            // Optionally, add this for stylistic rules
-            tseslint.configs.stylisticTypeChecked,
+- Create cards
+- Edit cards
+- Delete cards
+- Add card descriptions
+- Organize cards by status
 
-            // Other configs...
-        ],
-        languageOptions: {
-            parserOptions: {
-                project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-                tsconfigRootDir: import.meta.dirname,
-            },
-            // other options...
-        },
-    },
-]);
-```
+### Drag and Drop
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Cards can be reordered within a column and moved between:
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+- To Do
+- In Progress
+- Done
 
-export default defineConfig([
-    globalIgnores(["dist"]),
-    {
-        files: ["**/*.{ts,tsx}"],
-        extends: [
-            // Other configs...
-            // Enable lint rules for React
-            reactX.configs["recommended-typescript"],
-            // Enable lint rules for React DOM
-            reactDom.configs.recommended,
-        ],
-        languageOptions: {
-            parserOptions: {
-                project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-                tsconfigRootDir: import.meta.dirname,
-            },
-            // other options...
-        },
-    },
-]);
-```
+Card positions are persisted through the backend API.
 
-# FE-Board-Card
+### UI
+
+- Responsive layout
+- Modal dialogs for creating and editing boards/cards
+- Form validation
+- Loading states
+- Error handling
+- Confirmation dialogs for destructive actions
+
+## Tech Stack
+
+### Core
+
+- React 19
+- TypeScript
+- Vite
+
+### State Management & API
+
+- Redux Toolkit
+- RTK Query
+
+### Routing
+
+- React Router
+
+### Drag and Drop
+
+- dnd-kit
+
+### Code Quality
+
+- ESLint
+- Prettier
+- TypeScript
+
+### Testing
+
+- Vitest
+- React Testing Library
+- Testing Library User Event
+
+### CI
+
+- GitHub Actions
+
+### Deployment
+
+- Vercel
+
+## Project Structure
+
+```text
+src/
+├── app/
+│   ├── router/
+│   └── store/
+│
+├── components/
+│   └── common/
+│
+├── features/
+│   ├── boards/
+│   │   ├── api/
+│   │   ├── components/
+│   │   └── types/
+│   │
+│   └── cards/
+│       └── components/
+│
+├── pages/
+│   └── BoardPage/
+│
+├── test/
+│
+├── App.tsx
+├── index.css
+└── main.tsx
