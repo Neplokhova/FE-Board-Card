@@ -23,11 +23,11 @@ vi.mock("../../api/boardsApi", () => ({
 
 vi.mock("@dnd-kit/core", () => ({
     DndContext: ({
-                     children,
-                     onDragStart,
-                     onDragOver,
-                     onDragEnd,
-                 }: {
+        children,
+        onDragStart,
+        onDragOver,
+        onDragEnd,
+    }: {
         children: React.ReactNode;
         onDragStart: (event: unknown) => void;
         onDragOver: (event: unknown) => void;
@@ -44,11 +44,7 @@ vi.mock("@dnd-kit/core", () => ({
 }));
 
 vi.mock("@dnd-kit/sortable", () => ({
-    arrayMove: (
-        array: unknown[],
-        oldIndex: number,
-        newIndex: number,
-    ) => {
+    arrayMove: (array: unknown[], oldIndex: number, newIndex: number) => {
         const result = [...array];
 
         const [item] = result.splice(oldIndex, 1);
@@ -61,26 +57,20 @@ vi.mock("@dnd-kit/sortable", () => ({
 
 vi.mock("../BoardColumn/BoardColumn", () => ({
     default: ({
-                  title,
-                  cards,
-                  onAddCard,
-                  onEditCard,
-                  onDeleteCard,
-              }: {
+        title,
+        cards,
+        onAddCard,
+        onEditCard,
+        onDeleteCard,
+    }: {
         title: string;
         cards: {
             id: string;
             name: string;
         }[];
         onAddCard?: () => void;
-        onEditCard: (card: {
-            id: string;
-            name: string;
-        }) => void;
-        onDeleteCard: (card: {
-            id: string;
-            name: string;
-        }) => void;
+        onEditCard: (card: { id: string; name: string }) => void;
+        onDeleteCard: (card: { id: string; name: string }) => void;
     }) => (
         <section>
             <h2>{title}</h2>
@@ -89,27 +79,18 @@ vi.mock("../BoardColumn/BoardColumn", () => ({
                 <div key={card.id}>
                     <span>{card.name}</span>
 
-                    <button
-                        type="button"
-                        onClick={() => onEditCard(card)}
-                    >
+                    <button type="button" onClick={() => onEditCard(card)}>
                         Edit {card.name}
                     </button>
 
-                    <button
-                        type="button"
-                        onClick={() => onDeleteCard(card)}
-                    >
+                    <button type="button" onClick={() => onDeleteCard(card)}>
                         Delete {card.name}
                     </button>
                 </div>
             ))}
 
             {onAddCard && (
-                <button
-                    type="button"
-                    onClick={onAddCard}
-                >
+                <button type="button" onClick={onAddCard}>
                     Add card
                 </button>
             )}
@@ -208,21 +189,13 @@ describe("BoardColumns", () => {
             />,
         );
 
-        expect(
-            screen.getByText("First card"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("First card")).toBeInTheDocument();
 
-        expect(
-            screen.getByText("Second card"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Second card")).toBeInTheDocument();
 
-        expect(
-            screen.getByText("In progress card"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("In progress card")).toBeInTheDocument();
 
-        expect(
-            screen.getByText("Done card"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Done card")).toBeInTheDocument();
     });
 
     it("calls onAddCard when Add card is clicked", async () => {
@@ -276,13 +249,9 @@ describe("BoardColumns", () => {
             }),
         );
 
-        expect(onEditCard).toHaveBeenCalledWith(
-            cards.todo[0],
-        );
+        expect(onEditCard).toHaveBeenCalledWith(cards.todo[0]);
 
-        expect(onDeleteCard).toHaveBeenCalledWith(
-            cards.todo[1],
-        );
+        expect(onDeleteCard).toHaveBeenCalledWith(cards.todo[1]);
     });
 
     it("moves a card within the same column", async () => {

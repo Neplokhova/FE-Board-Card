@@ -20,10 +20,10 @@ vi.mock("@dnd-kit/sortable", () => ({
 
 vi.mock("../../../cards/components/CardItem/CardItem", () => ({
     default: ({
-                  card,
-                  onEdit,
-                  onDelete,
-              }: {
+        card,
+        onEdit,
+        onDelete,
+    }: {
         card: { name: string };
         onEdit: () => void;
         onDelete: () => void;
@@ -87,13 +87,9 @@ describe("BoardColumn", () => {
             />,
         );
 
-        expect(
-            screen.getByText("First card"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("First card")).toBeInTheDocument();
 
-        expect(
-            screen.getByText("Second card"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Second card")).toBeInTheDocument();
     });
 
     it("renders empty state when there are no cards", () => {
@@ -107,9 +103,7 @@ describe("BoardColumn", () => {
             />,
         );
 
-        expect(
-            screen.getByText("No cards yet."),
-        ).toBeInTheDocument();
+        expect(screen.getByText("No cards yet.")).toBeInTheDocument();
     });
 
     it("renders Add card button when onAddCard is provided", () => {

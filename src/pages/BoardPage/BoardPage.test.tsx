@@ -16,34 +16,34 @@ const deleteCardMock = vi.fn();
 type BoardQueryState = {
     data:
         | {
-        data: {
-            id: string;
-            name: string;
-            cards: {
-                todo: {
-                    id: string;
-                    name: string;
-                    description: string;
-                    status: "todo";
-                    position: number;
-                }[];
-                "in-progress": {
-                    id: string;
-                    name: string;
-                    description: string;
-                    status: "in-progress";
-                    position: number;
-                }[];
-                done: {
-                    id: string;
-                    name: string;
-                    description: string;
-                    status: "done";
-                    position: number;
-                }[];
-            };
-        };
-    }
+              data: {
+                  id: string;
+                  name: string;
+                  cards: {
+                      todo: {
+                          id: string;
+                          name: string;
+                          description: string;
+                          status: "todo";
+                          position: number;
+                      }[];
+                      "in-progress": {
+                          id: string;
+                          name: string;
+                          description: string;
+                          status: "in-progress";
+                          position: number;
+                      }[];
+                      done: {
+                          id: string;
+                          name: string;
+                          description: string;
+                          status: "done";
+                          position: number;
+                      }[];
+                  };
+              };
+          }
         | undefined;
     isLoading: boolean;
     isError: boolean;
@@ -126,225 +126,197 @@ vi.mock("../../features/boards/api/boardsApi", () => ({
     ],
 }));
 
-vi.mock(
-    "../../features/boards/components/BoardLoader/BoardLoader",
-    () => ({
-        default: ({
-                      onCreateBoard,
-                  }: {
-            onCreateBoard: () => void;
-        }) => (
-            <button type="button" onClick={onCreateBoard}>
-                Create board
+vi.mock("../../features/boards/components/BoardLoader/BoardLoader", () => ({
+    default: ({ onCreateBoard }: { onCreateBoard: () => void }) => (
+        <button type="button" onClick={onCreateBoard}>
+            Create board
+        </button>
+    ),
+}));
+
+vi.mock("../../features/boards/components/BoardHeader/BoardHeader", () => ({
+    default: ({
+        name,
+        onEdit,
+        onDelete,
+    }: {
+        name: string;
+        publicId: string;
+        onEdit: () => void;
+        onDelete: () => void;
+    }) => (
+        <header>
+            <h1>{name}</h1>
+
+            <button type="button" onClick={onEdit}>
+                Edit board
             </button>
-        ),
-    }),
-);
 
-vi.mock(
-    "../../features/boards/components/BoardHeader/BoardHeader",
-    () => ({
-        default: ({
-                      name,
-                      onEdit,
-                      onDelete,
-                  }: {
-            name: string;
-            publicId: string;
-            onEdit: () => void;
-            onDelete: () => void;
-        }) => (
-            <header>
-                <h1>{name}</h1>
+            <button type="button" onClick={onDelete}>
+                Delete board
+            </button>
+        </header>
+    ),
+}));
 
-                <button type="button" onClick={onEdit}>
-                    Edit board
-                </button>
+vi.mock("../../features/boards/components/BoardColumns/BoardColumns", () => ({
+    default: ({
+        onAddCard,
+        onEditCard,
+        onDeleteCard,
+    }: {
+        cards: unknown;
+        publicId: string;
+        onAddCard: () => void;
+        onEditCard: (card: unknown) => void;
+        onDeleteCard: (card: unknown) => void;
+    }) => (
+        <div>
+            <button type="button" onClick={onAddCard}>
+                Add card
+            </button>
 
-                <button type="button" onClick={onDelete}>
-                    Delete board
-                </button>
-            </header>
-        ),
-    }),
-);
+            <button
+                type="button"
+                onClick={() =>
+                    onEditCard({
+                        id: "card-1",
+                        name: "First card",
+                        description: "Description",
+                        status: "todo",
+                        position: 0,
+                    })
+                }
+            >
+                Edit card
+            </button>
 
-vi.mock(
-    "../../features/boards/components/BoardColumns/BoardColumns",
-    () => ({
-        default: ({
-                      onAddCard,
-                      onEditCard,
-                      onDeleteCard,
-                  }: {
-            cards: unknown;
-            publicId: string;
-            onAddCard: () => void;
-            onEditCard: (card: unknown) => void;
-            onDeleteCard: (card: unknown) => void;
-        }) => (
-            <div>
-                <button type="button" onClick={onAddCard}>
-                    Add card
-                </button>
+            <button
+                type="button"
+                onClick={() =>
+                    onDeleteCard({
+                        id: "card-1",
+                        name: "First card",
+                        description: "Description",
+                        status: "todo",
+                        position: 0,
+                    })
+                }
+            >
+                Delete card
+            </button>
+        </div>
+    ),
+}));
+
+vi.mock("../../features/boards/components/BoardModal/BoardModal", () => ({
+    default: ({
+        isOpen,
+        mode,
+        onClose,
+        onSubmit,
+        isSubmitting,
+    }: {
+        isOpen: boolean;
+        mode: "create" | "edit";
+        initialName?: string;
+        onClose: () => void;
+        onSubmit: (name: string) => void;
+        isSubmitting: boolean;
+    }) =>
+        isOpen ? (
+            <div data-testid="board-modal">
+                <span>
+                    {mode === "create"
+                        ? "Create board modal"
+                        : "Edit board modal"}
+                </span>
 
                 <button
                     type="button"
-                    onClick={() =>
-                        onEditCard({
-                            id: "card-1",
-                            name: "First card",
-                            description: "Description",
-                            status: "todo",
-                            position: 0,
-                        })
-                    }
+                    onClick={() => onSubmit("New board")}
+                    disabled={isSubmitting}
                 >
-                    Edit card
+                    Submit board
                 </button>
 
-                <button
-                    type="button"
-                    onClick={() =>
-                        onDeleteCard({
-                            id: "card-1",
-                            name: "First card",
-                            description: "Description",
-                            status: "todo",
-                            position: 0,
-                        })
-                    }
-                >
-                    Delete card
+                <button type="button" onClick={onClose}>
+                    Close board modal
                 </button>
             </div>
-        ),
-    }),
-);
+        ) : null,
+}));
 
-vi.mock(
-    "../../features/boards/components/BoardModal/BoardModal",
-    () => ({
-        default: ({
-                      isOpen,
-                      mode,
-                      onClose,
-                      onSubmit,
-                      isSubmitting,
-                  }: {
-            isOpen: boolean;
-            mode: "create" | "edit";
-            initialName?: string;
-            onClose: () => void;
-            onSubmit: (name: string) => void;
-            isSubmitting: boolean;
-        }) =>
-            isOpen ? (
-                <div data-testid="board-modal">
-                    <span>
-                        {mode === "create"
-                            ? "Create board modal"
-                            : "Edit board modal"}
-                    </span>
+vi.mock("../../features/cards/components/CardModal/CardModal", () => ({
+    default: ({
+        isOpen,
+        mode,
+        onClose,
+        onSubmit,
+        isSubmitting,
+    }: {
+        isOpen: boolean;
+        mode: "create" | "edit";
+        initialTitle?: string;
+        initialDescription?: string;
+        onClose: () => void;
+        onSubmit: (title: string, description: string) => void;
+        isSubmitting: boolean;
+    }) =>
+        isOpen ? (
+            <div data-testid="card-modal">
+                <span>
+                    {mode === "create"
+                        ? "Create card modal"
+                        : "Edit card modal"}
+                </span>
 
-                    <button
-                        type="button"
-                        onClick={() => onSubmit("New board")}
-                        disabled={isSubmitting}
-                    >
-                        Submit board
-                    </button>
+                <button
+                    type="button"
+                    onClick={() => onSubmit("New card", "New description")}
+                    disabled={isSubmitting}
+                >
+                    Submit card
+                </button>
 
-                    <button type="button" onClick={onClose}>
-                        Close board modal
-                    </button>
-                </div>
-            ) : null,
-    }),
-);
+                <button type="button" onClick={onClose}>
+                    Close card modal
+                </button>
+            </div>
+        ) : null,
+}));
 
-vi.mock(
-    "../../features/cards/components/CardModal/CardModal",
-    () => ({
-        default: ({
-                      isOpen,
-                      mode,
-                      onClose,
-                      onSubmit,
-                      isSubmitting,
-                  }: {
-            isOpen: boolean;
-            mode: "create" | "edit";
-            initialTitle?: string;
-            initialDescription?: string;
-            onClose: () => void;
-            onSubmit: (title: string, description: string) => void;
-            isSubmitting: boolean;
-        }) =>
-            isOpen ? (
-                <div data-testid="card-modal">
-                    <span>
-                        {mode === "create"
-                            ? "Create card modal"
-                            : "Edit card modal"}
-                    </span>
+vi.mock("../../components/common/ConfirmationModal/ConfirmationModal", () => ({
+    default: ({
+        isOpen,
+        title,
+        onClose,
+        onConfirm,
+        isLoading,
+    }: {
+        isOpen: boolean;
+        title: string;
+        message: string;
+        onClose: () => void;
+        onConfirm: () => void;
+        isLoading: boolean;
+        confirmText: string;
+        error: string;
+    }) =>
+        isOpen ? (
+            <div data-testid="confirmation-modal">
+                <span>{title}</span>
 
-                    <button
-                        type="button"
-                        onClick={() =>
-                            onSubmit("New card", "New description")
-                        }
-                        disabled={isSubmitting}
-                    >
-                        Submit card
-                    </button>
+                <button type="button" onClick={onConfirm} disabled={isLoading}>
+                    Confirm
+                </button>
 
-                    <button type="button" onClick={onClose}>
-                        Close card modal
-                    </button>
-                </div>
-            ) : null,
-    }),
-);
-
-vi.mock(
-    "../../components/common/ConfirmationModal/ConfirmationModal",
-    () => ({
-        default: ({
-                      isOpen,
-                      title,
-                      onClose,
-                      onConfirm,
-                      isLoading,
-                  }: {
-            isOpen: boolean;
-            title: string;
-            message: string;
-            onClose: () => void;
-            onConfirm: () => void;
-            isLoading: boolean;
-            confirmText: string;
-            error: string;
-        }) =>
-            isOpen ? (
-                <div data-testid="confirmation-modal">
-                    <span>{title}</span>
-
-                    <button
-                        type="button"
-                        onClick={onConfirm}
-                        disabled={isLoading}
-                    >
-                        Confirm
-                    </button>
-
-                    <button type="button" onClick={onClose}>
-                        Cancel confirmation
-                    </button>
-                </div>
-            ) : null,
-    }),
-);
+                <button type="button" onClick={onClose}>
+                    Cancel confirmation
+                </button>
+            </div>
+        ) : null,
+}));
 
 describe("BoardPage", () => {
     beforeEach(() => {
@@ -431,13 +403,9 @@ describe("BoardPage", () => {
             }),
         );
 
-        expect(
-            screen.getByTestId("board-modal"),
-        ).toBeInTheDocument();
+        expect(screen.getByTestId("board-modal")).toBeInTheDocument();
 
-        expect(
-            screen.getByText("Create board modal"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Create board modal")).toBeInTheDocument();
     });
 
     it("creates a board and navigates to the new board", async () => {
@@ -463,9 +431,7 @@ describe("BoardPage", () => {
             });
         });
 
-        expect(navigateMock).toHaveBeenCalledWith(
-            "/board/new-board-id",
-        );
+        expect(navigateMock).toHaveBeenCalledWith("/board/new-board-id");
     });
 
     it("opens the edit board modal", async () => {
@@ -479,9 +445,7 @@ describe("BoardPage", () => {
             }),
         );
 
-        expect(
-            screen.getByText("Edit board modal"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Edit board modal")).toBeInTheDocument();
     });
 
     it("updates the board", async () => {
@@ -520,9 +484,7 @@ describe("BoardPage", () => {
             }),
         );
 
-        expect(
-            screen.getByText("Delete board?"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Delete board?")).toBeInTheDocument();
     });
 
     it("deletes the board and navigates home", async () => {
@@ -543,9 +505,7 @@ describe("BoardPage", () => {
         );
 
         await vi.waitFor(() => {
-            expect(deleteBoardMock).toHaveBeenCalledWith(
-                "board-public-id",
-            );
+            expect(deleteBoardMock).toHaveBeenCalledWith("board-public-id");
         });
 
         expect(navigateMock).toHaveBeenCalledWith("/", {
@@ -564,9 +524,7 @@ describe("BoardPage", () => {
             }),
         );
 
-        expect(
-            screen.getByText("Create card modal"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Create card modal")).toBeInTheDocument();
     });
 
     it("creates a card", async () => {
@@ -606,9 +564,7 @@ describe("BoardPage", () => {
             }),
         );
 
-        expect(
-            screen.getByText("Edit card modal"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Edit card modal")).toBeInTheDocument();
     });
 
     it("updates a card", async () => {
@@ -649,9 +605,7 @@ describe("BoardPage", () => {
             }),
         );
 
-        expect(
-            screen.getByText("Delete card?"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Delete card?")).toBeInTheDocument();
     });
 
     it("deletes a card", async () => {
@@ -695,9 +649,7 @@ describe("BoardPage", () => {
         ).toBeInTheDocument();
 
         expect(
-            screen.getByText(
-                "Please wait while we load your board.",
-            ),
+            screen.getByText("Please wait while we load your board."),
         ).toBeInTheDocument();
     });
 
@@ -716,17 +668,14 @@ describe("BoardPage", () => {
             }),
         ).toBeInTheDocument();
 
-        expect(
-            screen.getByText("Please try again."),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Please try again.")).toBeInTheDocument();
     });
 
     it("shows mutation error when creating a board fails", async () => {
         const user = userEvent.setup();
 
         createBoardMock.mockImplementation(() => ({
-            unwrap: () =>
-                Promise.reject(new Error("Create failed")),
+            unwrap: () => Promise.reject(new Error("Create failed")),
         }));
 
         render(<BoardPage />);
@@ -743,9 +692,7 @@ describe("BoardPage", () => {
             }),
         );
 
-        expect(
-            await screen.findByRole("alert"),
-        ).toHaveTextContent(
+        expect(await screen.findByRole("alert")).toHaveTextContent(
             "Failed to create board. Please try again.",
         );
     });
@@ -754,8 +701,7 @@ describe("BoardPage", () => {
         const user = userEvent.setup();
 
         createCardMock.mockImplementation(() => ({
-            unwrap: () =>
-                Promise.reject(new Error("Create failed")),
+            unwrap: () => Promise.reject(new Error("Create failed")),
         }));
 
         render(<BoardPage />);
@@ -772,9 +718,7 @@ describe("BoardPage", () => {
             }),
         );
 
-        expect(
-            await screen.findByRole("alert"),
-        ).toHaveTextContent(
+        expect(await screen.findByRole("alert")).toHaveTextContent(
             "Failed to create card. Please try again.",
         );
     });

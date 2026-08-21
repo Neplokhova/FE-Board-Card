@@ -22,13 +22,9 @@ describe("CardModal", () => {
             }),
         ).toBeInTheDocument();
 
-        expect(
-            screen.getByLabelText("Title"),
-        ).toBeInTheDocument();
+        expect(screen.getByLabelText("Title")).toBeInTheDocument();
 
-        expect(
-            screen.getByLabelText("Description"),
-        ).toBeInTheDocument();
+        expect(screen.getByLabelText("Description")).toBeInTheDocument();
 
         expect(
             screen.getByRole("button", {
@@ -56,13 +52,11 @@ describe("CardModal", () => {
             }),
         ).toBeInTheDocument();
 
-        expect(
-            screen.getByLabelText("Title"),
-        ).toHaveValue("Existing card");
+        expect(screen.getByLabelText("Title")).toHaveValue("Existing card");
 
-        expect(
-            screen.getByLabelText("Description"),
-        ).toHaveValue("Existing description");
+        expect(screen.getByLabelText("Description")).toHaveValue(
+            "Existing description",
+        );
 
         expect(
             screen.getByRole("button", {
@@ -109,9 +103,7 @@ describe("CardModal", () => {
             }),
         );
 
-        expect(
-            screen.getByText("Card title is required."),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Card title is required.")).toBeInTheDocument();
 
         expect(onSubmit).not.toHaveBeenCalled();
     });
@@ -130,10 +122,7 @@ describe("CardModal", () => {
             />,
         );
 
-        await user.type(
-            screen.getByLabelText("Title"),
-            "   My card   ",
-        );
+        await user.type(screen.getByLabelText("Title"), "   My card   ");
 
         await user.type(
             screen.getByLabelText("Description"),
@@ -146,10 +135,7 @@ describe("CardModal", () => {
             }),
         );
 
-        expect(onSubmit).toHaveBeenCalledWith(
-            "My card",
-            "Card description",
-        );
+        expect(onSubmit).toHaveBeenCalledWith("My card", "Card description");
     });
 
     it("accepts a description with exactly 300 characters", async () => {
@@ -166,17 +152,11 @@ describe("CardModal", () => {
             />,
         );
 
-        await user.type(
-            screen.getByLabelText("Title"),
-            "Card",
-        );
+        await user.type(screen.getByLabelText("Title"), "Card");
 
         const description = "a".repeat(300);
 
-        await user.type(
-            screen.getByLabelText("Description"),
-            description,
-        );
+        await user.type(screen.getByLabelText("Description"), description);
 
         await user.click(
             screen.getByRole("button", {
@@ -184,10 +164,7 @@ describe("CardModal", () => {
             }),
         );
 
-        expect(onSubmit).toHaveBeenCalledWith(
-            "Card",
-            description,
-        );
+        expect(onSubmit).toHaveBeenCalledWith("Card", description);
     });
 
     it("calls onClose when Cancel is clicked", async () => {
@@ -230,12 +207,8 @@ describe("CardModal", () => {
             }),
         ).toBeDisabled();
 
-        expect(
-            screen.getByLabelText("Title"),
-        ).toBeDisabled();
+        expect(screen.getByLabelText("Title")).toBeDisabled();
 
-        expect(
-            screen.getByLabelText("Description"),
-        ).toBeDisabled();
+        expect(screen.getByLabelText("Description")).toBeDisabled();
     });
 });

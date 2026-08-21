@@ -152,7 +152,6 @@ function BoardPage() {
         }
     };
 
-
     const handleEditCard = (card: Card) => {
         setMutationError("");
 
@@ -281,7 +280,6 @@ function BoardPage() {
         return (
             <main className="board-page">
                 <div className="board-error">
-
                     <BoardLoader
                         onCreateBoard={() => {
                             setBoardModalMode("create");

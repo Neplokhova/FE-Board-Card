@@ -53,13 +53,7 @@ describe("CardItem", () => {
     });
 
     it("renders the card title", () => {
-        render(
-            <CardItem
-                card={card}
-                onEdit={onEdit}
-                onDelete={onDelete}
-            />,
-        );
+        render(<CardItem card={card} onEdit={onEdit} onDelete={onDelete} />);
 
         expect(
             screen.getByRole("heading", {
@@ -69,17 +63,9 @@ describe("CardItem", () => {
     });
 
     it("renders the card description", () => {
-        render(
-            <CardItem
-                card={card}
-                onEdit={onEdit}
-                onDelete={onDelete}
-            />,
-        );
+        render(<CardItem card={card} onEdit={onEdit} onDelete={onDelete} />);
 
-        expect(
-            screen.getByText("Test description"),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Test description")).toBeInTheDocument();
     });
 
     it("does not render description when it is empty", () => {
@@ -94,21 +80,13 @@ describe("CardItem", () => {
             />,
         );
 
-        expect(
-            screen.queryByText("Test description"),
-        ).not.toBeInTheDocument();
+        expect(screen.queryByText("Test description")).not.toBeInTheDocument();
     });
 
     it("calls onEdit when edit button is clicked", async () => {
         const user = userEvent.setup();
 
-        render(
-            <CardItem
-                card={card}
-                onEdit={onEdit}
-                onDelete={onDelete}
-            />,
-        );
+        render(<CardItem card={card} onEdit={onEdit} onDelete={onDelete} />);
 
         await user.click(
             screen.getByRole("button", {
@@ -122,13 +100,7 @@ describe("CardItem", () => {
     it("calls onDelete when delete button is clicked", async () => {
         const user = userEvent.setup();
 
-        render(
-            <CardItem
-                card={card}
-                onEdit={onEdit}
-                onDelete={onDelete}
-            />,
-        );
+        render(<CardItem card={card} onEdit={onEdit} onDelete={onDelete} />);
 
         await user.click(
             screen.getByRole("button", {
@@ -157,11 +129,7 @@ describe("CardItem", () => {
         });
 
         const { container } = render(
-            <CardItem
-                card={card}
-                onEdit={onEdit}
-                onDelete={onDelete}
-            />,
+            <CardItem card={card} onEdit={onEdit} onDelete={onDelete} />,
         );
 
         expect(
@@ -172,13 +140,7 @@ describe("CardItem", () => {
     it("calls the correct callback when action buttons are used", async () => {
         const user = userEvent.setup();
 
-        render(
-            <CardItem
-                card={card}
-                onEdit={onEdit}
-                onDelete={onDelete}
-            />,
-        );
+        render(<CardItem card={card} onEdit={onEdit} onDelete={onDelete} />);
 
         await user.click(
             screen.getByRole("button", {

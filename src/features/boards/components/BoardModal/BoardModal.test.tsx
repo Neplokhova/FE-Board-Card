@@ -22,9 +22,7 @@ describe("BoardModal", () => {
             }),
         ).toBeInTheDocument();
 
-        expect(
-            screen.getByLabelText("Board name"),
-        ).toBeInTheDocument();
+        expect(screen.getByLabelText("Board name")).toBeInTheDocument();
 
         expect(
             screen.getByRole("button", {
@@ -71,9 +69,7 @@ describe("BoardModal", () => {
             }),
         );
 
-        expect(
-            screen.getByText("Board name is required."),
-        ).toBeInTheDocument();
+        expect(screen.getByText("Board name is required.")).toBeInTheDocument();
 
         expect(onSubmit).not.toHaveBeenCalled();
     });
