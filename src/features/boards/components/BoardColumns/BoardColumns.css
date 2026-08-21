@@ -1,0 +1,16 @@
+.board-columns {
+    width: 100%;
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+@media (max-width: 900px) {
+    .board-columns {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}

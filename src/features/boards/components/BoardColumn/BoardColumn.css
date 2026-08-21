@@ -1,0 +1,105 @@
+.board-column {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    padding: 20px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.04),
+        0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.board-column-header {
+    margin-bottom: 16px;
+}
+
+.board-column-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.board-column-add-card {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-top: 12px;
+
+    min-height: 56px;
+    padding: 16px;
+
+    border: 1px dashed #d1d5db;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #6b7280;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.15s ease,
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+.board-column-add-card:hover {
+    border-color: #9ca3af;
+    background: #f9fafb;
+    color: #374151;
+}
+
+.board-column-add-card:active {
+    background: #f3f4f6;
+}
+
+.board-column-drag-over {
+    background: #f8fafc;
+}
+
+.board-column-empty {
+    min-height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding: 20px;
+
+    border: 1px dashed #d1d5db;
+    border-radius: 10px;
+
+    background: #fafafa;
+
+    color: #9ca3af;
+}
+
+.board-column-empty p {
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+    .board-column {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .board-column-header {
+        margin-bottom: 12px;
+    }
+}

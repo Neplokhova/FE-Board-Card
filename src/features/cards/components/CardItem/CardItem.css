@@ -1,0 +1,116 @@
+.card-item {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+    transition:
+        box-shadow 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.card-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.card-item-dragging {
+    opacity: 0.5;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-item-content {
+    cursor: grab;
+}
+
+.card-item-content:active {
+    cursor: grabbing;
+}
+
+.card-item-title {
+    margin: 0;
+
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 600;
+
+    color: #111827;
+}
+
+.card-item-description {
+    margin: 8px 0 0;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: #6b7280;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.card-item-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 4px;
+
+    margin-top: 14px;
+}
+
+.card-action-button {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+
+    font-size: 16px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
+}
+
+.card-action-button:hover {
+    background: #f3f4f6;
+}
+
+.card-action-button:active {
+    transform: scale(0.95);
+}
+
+.card-action-edit {
+    color: #4f46e5;
+}
+
+.card-action-edit:hover {
+    background: #eef2ff;
+}
+
+.card-action-delete {
+    color: #dc2626;
+}
+
+.card-action-delete:hover {
+    background: #fef2f2;
+}
