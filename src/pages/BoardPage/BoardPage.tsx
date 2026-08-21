@@ -152,13 +152,6 @@ function BoardPage() {
         }
     };
 
-    const handleAddCard = () => {
-        setMutationError("");
-
-        setCardModalMode("create");
-        setSelectedCard(null);
-        setIsCardModalOpen(true);
-    };
 
     const handleEditCard = (card: Card) => {
         setMutationError("");
