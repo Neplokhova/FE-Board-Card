@@ -281,9 +281,6 @@ function BoardPage() {
         return (
             <main className="board-page">
                 <div className="board-error">
-                    <h2>Unable to load board.</h2>
-
-                    <p>Please try again.</p>
 
                     <BoardLoader
                         onCreateBoard={() => {
@@ -301,6 +298,10 @@ function BoardPage() {
                         onSubmit={handleCreateBoard}
                         isSubmitting={isCreating}
                     />
+
+                    <h2>Unable to load board.</h2>
+
+                    <p>Please try again.</p>
                 </div>
             </main>
         );
