@@ -343,7 +343,7 @@ function BoardPage() {
                 )}
 
                 <BoardModal
-                    key={`${boardModalMode}-${board?.id ?? "new"}`}
+                    key={boardModalMode}
                     isOpen={isBoardModalOpen}
                     mode={boardModalMode}
                     initialName={boardModalMode === "edit" ? board?.name : ""}
