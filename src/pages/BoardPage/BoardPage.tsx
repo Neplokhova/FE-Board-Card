@@ -51,6 +51,8 @@ function BoardPage() {
 
     const [isCardDeleteModalOpen, setIsCardDeleteModalOpen] = useState(false);
 
+    const [cardModalKey, setCardModalKey] = useState(0);
+
     const [createBoard, { isLoading: isCreating }] = useCreateBoardMutation();
 
     const [updateBoard, { isLoading: isUpdating }] = useUpdateBoardMutation();
@@ -259,6 +261,15 @@ function BoardPage() {
         }
     };
 
+    const handleAddCard = () => {
+        setMutationError("");
+
+        setCardModalMode("create");
+        setSelectedCard(null);
+        setCardModalKey((value) => value + 1);
+        setIsCardModalOpen(true);
+    };
+
     if (publicId && isLoading) {
         return (
             <main className="board-page">
@@ -377,7 +388,7 @@ function BoardPage() {
                 />
 
                 <CardModal
-                    key={`${cardModalMode}-${selectedCard?.id ?? "new"}`}
+                    key={`${cardModalMode}-${selectedCard?.id ?? "new"}-${cardModalKey}`}
                     isOpen={isCardModalOpen}
                     mode={cardModalMode}
                     initialTitle={
